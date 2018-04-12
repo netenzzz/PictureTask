@@ -23,7 +23,6 @@ struct PcapLocalHeader {
   uint32_t orig_len; 
 };
 
-// Ethernet packet structure
 #pragma pack(push, 1)
 struct EthernetFront {
   int mac_port_1;
@@ -117,8 +116,8 @@ void Reader::OnePacketParse() {
 
 void Reader::SkipPadding(const int &real_size, const int &actual_size) {
   const int diff = std::fabs(actual_size - real_size);
-  char not_used[6];
-  file.read((char *)&not_used, 6);
+  char not_used[diff];
+  file.read((char *)&not_used, diff);
 }
 
 void Reader::ParseHTTPRequest() {
